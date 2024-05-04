@@ -1,4 +1,6 @@
-import React from "react";
+// BotSpecs.js
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 const botTypeClasses = {
   Assault: "icon military",
@@ -9,7 +11,33 @@ const botTypeClasses = {
   Captain: "icon star",
 };
 
-function BotSpecs({ bot }) {
+function BotSpecs({ addToArmy }) {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const [bot, setBot] = useState(null);
+
+  useEffect(() => {
+    // Fetch bot data based on the ID from the URL
+    fetch(`http://localhost:8002/bots/${id}`)
+      .then((response) => response.json())
+      .then((data) => setBot(data))
+      .catch((error) => console.error("Error fetching bot:", error));
+  }, [id]);
+
+  const handleGoBack = () => {
+    // Navigate back to the previous page
+    navigate(-1);
+  };
+
+//   const handleEnlist = () => {
+//  addToArmy(bot)
+//   };
+
+  if (!bot) {
+    // Render loading state or error message while fetching bot data
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="ui segment">
       <div className="ui two column centered grid">
@@ -18,18 +46,18 @@ function BotSpecs({ bot }) {
             <img
               alt="oh no!"
               className="ui medium circular image bordered"
-              src={bot.avatar_url}
+              src={bot?.avatar_url}
             />
           </div>
           <div className="four wide column">
-            <h2>Name: {bot.name}</h2>
+            <h2>Name: {bot?.name}</h2>
             <p>
               <strong>Catchphrase: </strong>
               {bot.catchphrase}
             </p>
             <strong>
               Class: {bot.bot_class}
-              <i className={botTypeClasses[bot.bot_class]} />
+              <i className={botTypeClasses[bot?.bot_class]} />
             </strong>
             <br />
             <div className="ui segment">
@@ -37,35 +65,23 @@ function BotSpecs({ bot }) {
                 <div className="row">
                   <div className="column">
                     <i className="icon large circular red heartbeat" />
-                    <strong>{bot.health}</strong>
+                    <strong>{bot?.health}</strong>
                   </div>
                   <div className="column">
                     <i className="icon large circular yellow lightning" />
-                    <strong>{bot.damage}</strong>
+                    <strong>{bot?.damage}</strong>
                   </div>
                   <div className="column">
                     <i className="icon large circular blue shield" />
-                    <strong>{bot.armor}</strong>
+                    <strong>{bot?.armor}</strong>
                   </div>
                 </div>
               </div>
             </div>
-            <button
-              className="ui button fluid"
-              onClick={() =>
-                console.log("connect this to a function that shows all bots")
-              }
-            >
+            <button className="ui button fluid" onClick={handleGoBack}>
               Go Back
             </button>
-            <button
-              className="ui button fluid"
-              onClick={() =>
-                console.log(
-                  "connect this to a function that adds this bot to your bot army list"
-                )
-              }
-            >
+            <button className="ui button fluid" onClick={()=>addToArmy(bot)}>
               Enlist
             </button>
           </div>
