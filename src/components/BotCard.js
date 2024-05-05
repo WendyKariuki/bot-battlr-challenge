@@ -10,14 +10,14 @@ const botTypeClasses = {
   Captain: "icon star",
 };
 
-function BotCard({ bot, addToArmy, removeFromCollection }) {
+function BotCard({ bot, addToArmy, removeFromArmy }) {
   const handleClick = () => {
     addToArmy(bot);
   };
 
   const handleRemove = () => {
     // Remove the bot from the army in the frontend
-    removeFromCollection(bot.id);
+    removeFromArmy(bot.id);
   
     // Send a request to the backend to remove the bot
     fetch(`http://localhost:8002/bots/${bot.id}`, {
@@ -27,7 +27,6 @@ function BotCard({ bot, addToArmy, removeFromCollection }) {
         if (!response.ok) {
           throw new Error("Failed to delete bot from backend");
         }
-        // Bot successfully deleted from backend
       })
       .catch((error) => {
         console.error("Error deleting bot from backend:", error);
@@ -37,11 +36,13 @@ function BotCard({ bot, addToArmy, removeFromCollection }) {
 
   return (
     <div className="ui column">
-      <Link to={`/bot/${bot.id}`}>
+     
         <div className="ui card" key={bot.id} onClick={handleClick}>
+        <Link to={`/bot/${bot.id}`}>
           <div className="image">
             <img alt="oh no!" src={bot.avatar_url} />
           </div>
+          </Link>
           <div className="content">
             <div className="header">
               {bot.name}
@@ -73,7 +74,7 @@ function BotCard({ bot, addToArmy, removeFromCollection }) {
             </span>
           </div>
         </div>
-      </Link>
+    
     </div>
   );
 }

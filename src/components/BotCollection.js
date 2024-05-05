@@ -3,8 +3,6 @@ import BotCard from "./BotCard"
 
 function BotCollection({bots, addToArmy, removeFromArmy,}) {
 
-  
-  // Your code here
   return (
     <div className="ui four column grid">
       <div className="row">

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-function YourBotArmy({ bots }) {
+function YourBotArmy({ bots, removeFromArmy }) {
 
   const [botArmy, setBotArmy] = useState(bots);
-
+  
   useEffect(() => {
     setBotArmy(bots);
   }, [bots]);
