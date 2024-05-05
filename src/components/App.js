@@ -9,7 +9,6 @@ function App() {
 
   // Function to handle adding a bot to the army
   const addToArmy = (bot) => {
-    console.log(bot, "peter");
     if (!botArmy.some((armyBot) => armyBot.id === bot.id)) {
       setBotArmy([...botArmy, bot]);
     }
