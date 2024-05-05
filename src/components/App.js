@@ -21,7 +21,7 @@ function App() {
   };
 
   useEffect(() => {
-    fetch("http://localhost:8002/bots")
+    fetch("https://bot-battlr-challenge-2.onrender.com/bots")
     .then(response => response.json())
     .then(data => setBots(data));
   },[botArmy]);

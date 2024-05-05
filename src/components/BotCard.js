@@ -20,7 +20,7 @@ function BotCard({ bot, addToArmy, removeFromArmy }) {
     removeFromArmy(bot.id);
   
     // Send a request to the backend to remove the bot
-    fetch(`http://localhost:8002/bots/${bot.id}`, {
+    fetch(`https://bot-battlr-challenge-2.onrender.com/bots/${bot.id}`, {
       method: "DELETE",
     })
       .then((response) => {
